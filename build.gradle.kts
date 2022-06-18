@@ -21,6 +21,17 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+
+
+
+	implementation("com.h2database:h2:2.1.212")
+	implementation("org.springframework.data:spring-data-jpa:2.7.0")
+	implementation("org.springframework.boot:spring-boot-starter-security:2.7.0")
+	implementation("org.springframework.security.oauth:spring-security-oauth2:2.5.2.RELEASE")
+	implementation("org.springframework.security:spring-security-jwt:1.1.1.RELEASE")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+//	implementation("com.h2database:h2:1.4.191")
 }
 
 tasks.withType<KotlinCompile> {

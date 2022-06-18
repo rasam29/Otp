@@ -1,12 +1,13 @@
 package com.example.playground.playground.services.authentication
 
 
-import com.example.playground.playground.services.utils.BaseResponse
-import com.example.playground.playground.services.utils.PHONE_NUMBER_NOT_VALID
+
+import com.example.playground.playground.services.common.BaseResponse
+import com.example.playground.playground.services.common.ParameterValidationError
 import com.example.playground.playground.services.utils.isPhoneNumberValid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
@@ -14,12 +15,13 @@ import java.util.UUID
 class SendOtp {
 
 
-    @PostMapping("/sendOtp")
-    fun sendOtp(@RequestParam("phone")phoneNumber:String?):ResponseEntity<BaseResponse<SendOtpResponse>>{
-        return if (phoneNumber.isNullOrBlank()){
-            ResponseEntity.ok().body(BaseResponse(PHONE_NUMBER_NOT_VALID, "ورود شماره ی همراه الزامی است!",null))
-        }else if (!phoneNumber.isPhoneNumberValid()){
-            ResponseEntity.ok().body(BaseResponse(PHONE_NUMBER_NOT_VALID,"شماره همراه معتبر نمیباشد!",null))
+    @PostMapping("/sendOtp", headers= ["Accept=application/json"])
+    fun sendOtp(@RequestBody request:SendOtpRequest?):ResponseEntity<BaseResponse<SendOtpResponse>>{
+        println(request?.phone)
+        return if (request?.phone.isNullOrBlank()){
+            throw ParameterValidationError(message = "شماره موبایل الزامی است!")
+        }else if (request?.phone?.isPhoneNumberValid()!= true){
+            throw ParameterValidationError(code = "1221","شماره موبایل معتبر نیست!")
         }else {
             //data base actions
             ResponseEntity.ok().body(BaseResponse.success(SendOtpResponse(UUID.randomUUID().toString())))

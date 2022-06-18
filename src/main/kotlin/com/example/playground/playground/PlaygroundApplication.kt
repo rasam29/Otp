@@ -3,6 +3,7 @@ package com.example.playground.playground
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
+
 @SpringBootApplication
 class PlaygroundApplication
 
